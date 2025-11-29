@@ -1,3 +1,4 @@
+import { isValidElement } from "react";
 import Student from "../models/student.model.js";
 import StudentExist from "../utils/isExist.js";
 
@@ -6,37 +7,50 @@ export const createStudent = async (req, res) => {
     const {
       admissionNumber,
       fullName,
-      name,
+      firstName,
+      middleName,
+      lastName,
       gender,
       admissionDate,
-      address,
-      isActive,
+      addressLine,
+      city,
+      state,
+      postalCode,
     } = req.body;
 
-    const isStudentExist = await StudentExist(req.body.admissionNumber);
+    // const isStudentExist = await StudentExist(req.body.admissionNumber);
+
+    const isStudentExist = await Student.findOne({ admissionNumber });
+
+    return console.log(isStudentExist);
+    
 
     if (isStudentExist.status) {
-      return res.status(400).json({ message: "Student already exists" });
+      return res
+        .status(400)
+        .json({ status: false, message: "Student already exists" });
     }
 
     await Student.create({
       admissionNumber,
       fullName,
       name: {
-        firstName: name.firstName,
-        middleName: name.middleName,
-        lastName: name.lastName,
+        firstName,
+        middleName,
+        lastName,
       },
       gender,
       admissionDate,
       address: {
-        addressLine: address.addressLine,
-        city: address.city,
-        state: address.state,
-        postalCode: address.postalCode,
+        addressLine: addressLine,
+        city: city,
+        state: state,
+        postalCode: postalCode,
       },
-      isActive,
+      // isActive,
     });
+
+    // console.log(req.body);
 
     res
       .status(201)
@@ -44,7 +58,7 @@ export const createStudent = async (req, res) => {
 
     // Student.create(req.body);
   } catch (error) {
-    res.status(500).json({ message: "Server Error" });
+    res.status(500).json({ status: false, message: "Server Error" });
     console.error(error);
   }
 };
