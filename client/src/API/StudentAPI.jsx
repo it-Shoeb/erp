@@ -3,6 +3,7 @@ import API from "../API/API.jsx";
 const getStudents = async () => {
   try {
     const { data } = await API.get("/student");
+    console.log(data);
     return data.students;
   } catch (error) {
     console.error("unable to access the the student database");

@@ -1,6 +1,7 @@
 import React from "react";
 
 import { AddStudentAPI } from "../utils/AddStudentAPI.jsx";
+import { Link } from "react-router-dom";
 
 const AddStudent = () => {
   const handleForm = async (e) => {
@@ -34,6 +35,11 @@ const AddStudent = () => {
   return (
     <>
       <div className="addStudent p-4 sm:p-12">
+        <div className="navigation flex gap-1">
+          <Link to={'/'}>Home</Link> &gt; 
+          <Link to={'/student'}>Student</Link> &gt; 
+          <Link to={'/student/add'}>Add Student</Link>
+        </div>
         <form
           action=""
           className="flex flex-col gap-4 p-4 bg-gray-100 rounded-2xl"
@@ -233,7 +239,7 @@ const AddStudent = () => {
 
           <hr />
           <div className="personal-info gap-4 flex items-center justify-end">
-            <p className="p-2 bg-red-200 rounded-md">Cancel</p>
+            <Link to={'/student'} className="p-2 bg-red-200 rounded-md">Cancel</Link>
             <input
               className="p-2 bg-green-200 rounded-md"
               type="submit"
