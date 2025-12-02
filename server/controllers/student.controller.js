@@ -1,4 +1,3 @@
-import { isValidElement } from "react";
 import Student from "../models/student.model.js";
 import StudentExist from "../utils/isExist.js";
 
@@ -22,10 +21,7 @@ export const createStudent = async (req, res) => {
 
     const isStudentExist = await Student.findOne({ admissionNumber });
 
-    return console.log(isStudentExist);
-    
-
-    if (isStudentExist.status) {
+    if (isStudentExist) {
       return res
         .status(400)
         .json({ status: false, message: "Student already exists" });
@@ -50,11 +46,13 @@ export const createStudent = async (req, res) => {
       // isActive,
     });
 
-    // console.log(req.body);
-
     res
       .status(201)
-      .json({ message: "Student created successfully", data: req.body });
+      .json({
+        status: true,
+        message: "Student created successfully",
+        data: req.body,
+      });
 
     // Student.create(req.body);
   } catch (error) {

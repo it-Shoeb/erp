@@ -8,16 +8,20 @@ const AddStudent = () => {
     const formData = new FormData(e.target);
 
     // const data = Object.fromEntries(formData.entries());
-    // return console.log(data);
+    // console.log(data);
 
     try {
-      const response = await AddStudentAPI(formData);
+      const data = await AddStudentAPI(formData);
 
-      console.log(response);
-
-      if (!response.status) {
-        return alert("failed to add student", response.message);
+      if (data?.response?.data?.status == false) {
+        console.error(data?.response?.data?.message);
+        alert(data?.response?.data?.message);
+        return;
       }
+
+      // if (!response.status) {
+      //   return alert("failed to add student", response.message);
+      // }
 
       alert("Student added successfully!");
       e.target.reset();
